@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Wizard</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <!-- Custom Styles -->
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        form {
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            color: #007bff;
+            margin-bottom: 20px;
+        }
+
+        button {
+            margin-top: 10px;
+        }
+
+        .form-check {
+            margin-bottom: 20px;
+        }
+
+        .form-check label {
+            font-weight: normal;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <form id="checkboxForm">
+            <div class="form-row mb-3">
+                <div class="form-group col-md-3">
+                    <div class="form-check">
+                        <input type="checkbox" id="personalCheckbox" class="form-check-input">
+                        <label class="form-check-label" for="personalCheckbox">Personal Details</label>
+                    </div>
+                </div>
+
+                <div class="form-group col-md-3">
+                    <div class="form-check">
+                        <input type="checkbox" id="educationCheckbox" class="form-check-input">
+                        <label class="form-check-label" for="educationCheckbox">Education Details</label>
+                    </div>
+                </div>
+
+                <div class="form-group col-md-3">
+                    <div class="form-check">
+                        <input type="checkbox" id="bankCheckbox" class="form-check-input">
+                        <label class="form-check-label" for="bankCheckbox">Bank Details</label>
+                    </div>
+                </div>
+
+                <div class="form-group col-md-3">
+                    <div class="form-check">
+                        <input type="checkbox" id="salaryCheckbox" class="form-check-input">
+                        <label class="form-check-label" for="salaryCheckbox">Salary Details</label>
+                    </div>
+                </div>
+            </div>
+            <button type="button" class="btn btn-primary" onclick="showSelectedForms()">Submit</button>
+        </form>
+        <div id="dynamicForms" style="display:none;"></div>
+
+        <form id="personal-details" style="display:none;">
+            <h2>Personal Details</h2>
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" id="name" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="phone">Phone Number</label>
+                <input type="tel" id="phone" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="address">Address</label>
+                <input type="text" id="address" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="pincode">Pincode</label>
+                <input type="text" id="pincode" class="form-control" required>
+            </div>
+            <button type="button" id="nextButton" class="btn btn-primary">Next</button>
+        </form>
+
+        <form id="education-details" style="display:none;">
+            <h2>Education Details</h2>
+            <div class="form-group">
+                <label for="schoolName">School Name</label>
+                <input type="text" id="schoolName" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="schoolTotalMark">School Total Mark</label>
+                <input type="number" id="schoolTotalMark" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="schoolPercentage">School Total Percentage</label>
+                <input type="number" id="schoolPercentage" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="collegeName">College Name</label>
+                <input type="text" id="collegeName" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="collegeTotalMark">College Total Mark</label>
+                <input type="number" id="collegeTotalMark" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="collegePercentage">College Total Percentage</label>
+                <input type="number" id="collegePercentage" class="form-control" required>
+            </div>
+            <button type="button" id="nextButton" class="btn btn-primary">Next</button>
+        </form>
+
+        <form id="bank-details" style="display:none;">
+            <h2>Bank Details</h2>
+            <div class="form-group">
+                <label for="bankName">Bank Name</label>
+                <input type="text" id="bankName" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="branchName">Branch Name</label>
+                <input type="text" id="branchName" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="accountNumber">Account Number</label>
+                <input type="text" id="accountNumber" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="ifscCode">IFSC Code</label>
+                <input type="text" id="ifscCode" class="form-control" required>
+            </div>
+            <button type="button" id="nextButton" class="btn btn-primary">Next</button>
+        </form>
+
+        <form id="salary-details" style="display:none;">
+            <h2>Salary Details</h2>
+            <div class="form-group">
+                <label for="basicSalary">Basic Salary</label>
+                <input type="number" id="basicSalary" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="hra">HRA</label>
+                <input type="number" id="hra" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="deductionAmount">Deduction Amount</label>
+                <input type="number" id="deductionAmount" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="totalSalary">Total Salary</label>
+                <input type="number" id="totalSalary" class="form-control" required>
+            </div>
+            <button type="button" id="nextButton" class="btn btn-primary">Next</button>
+        </form>
+
+        <script>
+            var selectedCheckboxIds = [];
+            var selectedForms = [];
+            var currentFormIndex = 0;
+            var forms = {};
+            var checkboxes = document.querySelectorAll('.form-check-input');
+
+            checkboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', (event) => {
+                    if (event.target.checked) {
+                        selectedCheckboxIds.push(event.target.id);
+                    } else {
+                        var index = selectedCheckboxIds.indexOf(event.target.id);
+                        if (index !== -1) {
+                            selectedCheckboxIds.splice(index, 1);
+                        }
+                    }
+                    console.log('Selected checkbox IDs:', selectedCheckboxIds);
+                });
+            });
+
+            function showSelectedForms() {
+                var checkboxForm = document.getElementById('checkboxForm');
+                var dynamicForms = document.getElementById('dynamicForms');
+                selectedForms = [];
+                selectedCheckboxIds.forEach(checkboxId => {
+                    var form = document.getElementById(checkboxId.replace('Checkbox', '-details'));
+                    if (form) {
+                        selectedForms.push(form);
+                    }
+                });
+
+                if (selectedForms.length > 0) {
+                    dynamicForms.innerHTML = '';
+                    currentFormIndex = 0;
+                    showForm(selectedForms[currentFormIndex]);
+                    checkboxForm.style.display = 'none';
+                    dynamicForms.style.display = 'block';
+                }
+            }
+
+            function showForm(form) {
+                selectedForms.forEach(form => {
+                    form.style.display = 'none';
+                });
+
+                form.style.display = 'block';
+                var nextButton = form.querySelector('#nextButton');
+                if (currentFormIndex < selectedForms.length - 1) {
+                    nextButton.textContent = 'Next';
+                    nextButton.addEventListener('click', () => {
+                        currentFormIndex++;
+                        showForm(selectedForms[currentFormIndex]);
+                        storeFormData(form);
+                    });
+                } else {
+                    nextButton.textContent = 'Submit';
+                    nextButton.addEventListener('click', () => {
+                        storeFormData(form);
+                        submitForm(form.id);
+                    });
+                    var clearButton = document.createElement('button');
+                    clearButton.type = 'button';
+                    clearButton.className = 'btn btn-danger float-right';
+                    clearButton.textContent = 'Clear';
+                    clearButton.addEventListener('click', () => {
+                        clearFormsData();
+                    });
+                    form.appendChild(clearButton);
+                }
+            }
+
+            function storeFormData(form) {
+                var formData = {};
+                var inputFields = form.querySelectorAll('.form-control');
+
+                inputFields.forEach(inputField => {
+                    formData[inputField.id] = inputField.value;
+                });
+
+                forms[form.id] = formData;
+                localStorage.setItem('formsData', JSON.stringify(forms));
+                console.log('Forms data:', forms);
+            }
+
+            var storedForms = [];
+            function submitForm(formId) {
+                 storedForms = JSON.parse(localStorage.getItem('formsData'));
+                console.log('Stored Forms data:', storedForms);
+                alert("Form Submit Sucessfully");
+            }
+
+        var storedForms = JSON.parse(localStorage.getItem('formsData'));
+
+        if (storedForms) {
+            for (var formId in storedForms) {
+                var form = document.getElementById(formId);
+                if (form) {
+                    var formValues = storedForms[formId];
+                    for (var fieldId in formValues) {
+                        var inputField = form.querySelector('#' + fieldId);
+                        if (inputField) {
+                            inputField.value = formValues[fieldId];
+                        }
+                    }
+                }
+            }
+        }
+        function clearFormsData(){
+          localStorage.removeItem('formsData');
+          alert("Form data clear Sucessfully");
+        }
+        </script>
+    </div>
+</body>
+</html>

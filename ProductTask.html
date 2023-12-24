@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task 1 Calculator</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .total-amount {
+            font-weight: bold;
+        }
+
+        button {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2 class="mt-4">Task 1 Calculator</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Quantity</th>
+                    <th>Per Price</th>
+                    <th>Discount (%)</th>
+                    <th>Total Amount</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="item-list">
+                <tr class="item-row">
+                    <td><input type="text" class="form-control name" value=""></td>
+                    <td><input type="number" class="form-control quantity" value="" oninput="updateTotalAmount()"></td>
+                    <td><input type="number" class="form-control per-price" value="" oninput="updateTotalAmount()"></td>
+                    <td><input type="number" class="form-control discount" value="" oninput="updateTotalAmount()"></td>
+                    <td class="total-amount font-weight-bold">0.00</td>
+                    <td><button class="btn btn-danger" onclick="removeItem(this)">Remove</button></td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="4" style="text-align: right; font-weight: bold;">Total Amount:</td>
+                    <td id="grand-total" style="text-align: center; font-weight: bold;">0.00</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td colspan="4" style="text-align: right; font-weight: bold;">Round Off:</td>
+                    <td id="rounded-total" style="text-align: center; font-weight: bold;">0.00</td>
+                    <td></td>
+                </tr>
+            </tfoot>
+        </table>
+        <button class="btn btn-primary" onclick="addItem()">Add Item</button>
+    </div>
+    <script>
+        function addItem() {
+        var itemList = document.getElementById('item-list');
+        var newRow = itemList.insertRow();
+        newRow.classList.add('item-row'); // Add a class to the new row
+        var cellNames = ['Name', 'Quantity', 'Per Price', 'Discount (%)', 'Total Amount', 'Action'];
+        for (var cellName of cellNames) {
+            var newCell = document.createElement('td');
+            var input = document.createElement('input');
+
+            switch (cellName) {
+            case 'Action':
+                var removeButton = document.createElement('button');
+                removeButton.textContent = 'Remove';
+                removeButton.className = 'btn btn-danger';
+                removeButton.addEventListener('click', function () {
+                removeItem(this);
+                updateTotalAmount();
+                });
+                newCell.appendChild(removeButton);
+                break;
+            case 'Total Amount':
+                newCell.className = 'total-amount font-weight-bold';
+                newCell.textContent = '0.00';
+                break;
+            case 'Discount (%)':
+                input.type = 'number';
+                input.className = 'form-control discount';
+                input.addEventListener('input', function () {
+                updateTotalAmount();
+                });
+                newCell.appendChild(input);
+                break;
+            default:
+                input.type = (cellName === 'Name') ? 'text' : 'number';
+                input.className = `form-control ${cellName.toLowerCase().replace(/\s/g, '-')}`;
+                if (cellName !== 'Name') {
+                input.addEventListener('input', function () {
+                    updateTotalAmount();
+                });
+                }
+                newCell.appendChild(input);
+                break;
+            }
+            newRow.appendChild(newCell);
+        }
+
+        // Event delegation for discount field
+        document.getElementById('item-list').addEventListener('input', function(event) {
+            if (event.target.classList.contains('discount')) {
+            updateTotalAmount();
+            }
+        });
+        }
+
+        function removeItem(button) {
+            var row = button.parentNode.parentNode;
+            row.parentNode.removeChild(row);
+            updateTotalAmount();
+        }
+
+        function updateTotalAmount() {
+        var itemRows = document.querySelectorAll('.item-row');
+        let grandTotal = 0;
+
+        itemRows.forEach(row => {
+            var quantity = parseFloat(row.querySelector('.quantity').value) || 0;
+            var perPrice = parseFloat(row.querySelector('.per-price').value) || 0;
+            var discount = parseFloat(row.querySelector('.discount').value) || 0;
+            var totalAmount = quantity * perPrice * (1 - discount / 100);
+            row.querySelector('.total-amount').textContent = totalAmount.toFixed(2);
+            grandTotal += totalAmount;
+        });
+
+        document.getElementById('grand-total').textContent = grandTotal.toFixed(2);
+
+        // Round off to two decimal places
+        var roundedTotal = Math.round(grandTotal * 100) / 100;
+        document.getElementById('rounded-total').textContent = roundedTotal.toFixed(2);
+        }
+    </script>
+</body>
+
+</html>
