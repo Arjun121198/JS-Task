@@ -224,7 +224,7 @@
                 selectedForms.forEach(form => {
                     form.style.display = 'none';
                 });
-
+            console.log(selectedForms);
                 form.style.display = 'block';
                 var nextButton = form.querySelector('#nextButton');
                 if (currentFormIndex < selectedForms.length - 1) {
@@ -269,6 +269,7 @@
                  storedForms = JSON.parse(localStorage.getItem('formsData'));
                 console.log('Stored Forms data:', storedForms);
                 alert("Form Submit Sucessfully");
+                window.location.reload();
             }
 
         var storedForms = JSON.parse(localStorage.getItem('formsData'));
@@ -290,6 +291,7 @@
         function clearFormsData(){
           localStorage.removeItem('formsData');
           alert("Form data clear Sucessfully");
+          window.location.reload();
         }
         </script>
     </div>
